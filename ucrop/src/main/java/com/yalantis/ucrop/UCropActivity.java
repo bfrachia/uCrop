@@ -105,6 +105,8 @@ public class UCropActivity extends AppCompatActivity {
     private int mCompressQuality = DEFAULT_COMPRESS_QUALITY;
     private int[] mAllowedGestures = new int[]{SCALE, ROTATE, ALL};
 
+    private Uri inputUri;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,7 +179,7 @@ public class UCropActivity extends AppCompatActivity {
      * This method extracts all data from the incoming intent and setups views properly.
      */
     private void setImageData(@NonNull Intent intent) {
-        Uri inputUri = intent.getParcelableExtra(UCrop.EXTRA_INPUT_URI);
+        inputUri = intent.getParcelableExtra(UCrop.EXTRA_INPUT_URI);
         Uri outputUri = intent.getParcelableExtra(UCrop.EXTRA_OUTPUT_URI);
         processOptions(intent);
 
@@ -627,6 +629,7 @@ public class UCropActivity extends AppCompatActivity {
 
     protected void setResultUri(Uri uri, float resultAspectRatio, int offsetX, int offsetY, int imageWidth, int imageHeight) {
         setResult(RESULT_OK, new Intent()
+                .putExtra(UCrop.EXTRA_INPUT_URI, inputUri)
                 .putExtra(UCrop.EXTRA_OUTPUT_URI, uri)
                 .putExtra(UCrop.EXTRA_OUTPUT_CROP_ASPECT_RATIO, resultAspectRatio)
                 .putExtra(UCrop.EXTRA_OUTPUT_IMAGE_WIDTH, imageWidth)
